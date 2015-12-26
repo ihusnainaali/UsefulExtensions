@@ -1,4 +1,4 @@
-import UIKit
+import Foundation
 
 extension Int {
     var isEven: Bool { return self % 2 == 0 }
@@ -14,16 +14,13 @@ extension Int {
     var toFloat: Float { return Float(self) }
     
     var digits: Int {
-        if self == 0
-        {
+        if self == 0 {
             return 1
         }
-        else if(Int(fabs(toDouble)) <= LONG_MAX)
-        {
+        else if(Int(fabs(toDouble)) <= LONG_MAX) {
             return Int(log10(fabs(toDouble))) + 1
         }
-        else
-        {
+        else {
             return -1;
         }
     }
@@ -37,6 +34,7 @@ extension Int {
 2.isPrime
 3.isPrime
 105.isPrime
+
 
 
 
