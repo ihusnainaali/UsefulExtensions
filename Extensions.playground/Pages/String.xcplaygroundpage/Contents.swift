@@ -2,6 +2,7 @@ import Foundation
 
 extension String {
     var lenght : Int { return self.characters.count }
+    
     subscript (i: Int) -> Character {
         return self[self.startIndex.advancedBy(i)]
     }
