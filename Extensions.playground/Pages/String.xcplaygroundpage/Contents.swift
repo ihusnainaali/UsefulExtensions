@@ -12,9 +12,22 @@ extension String {
             .map { "\(self[lenght - $0])" }
             .joinWithSeparator("")
     }
+    
+    static func randomString(size: Int) -> String {
+        let source = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        return (1...size)
+            .map { (number) -> String in
+                return "\(source[Int(arc4random_uniform(UInt32(source.lenght)))])"
+            }
+            .joinWithSeparator("")
+    }
 }
 
-
 "This is cool".reverse()
+String.randomString(10)
+
+
+
+
 
 

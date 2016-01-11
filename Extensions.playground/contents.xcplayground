@@ -6,5 +6,6 @@
         <page name='String'/>
         <page name='ImageAsset'/>
         <page name='UIColor'/>
+        <page name='Bool'/>
     </pages>
 </playground>
