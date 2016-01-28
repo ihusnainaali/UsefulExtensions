@@ -1,11 +1,12 @@
 import UIKit
 import Foundation
+import XCPlayground
 
 enum ImageAsset: String {
-    case Apple = "apple"
-    case Microsoft = "microsoft"
-    case Google = "google"
-    case Youtube = "youtube"
+    case Bat = "B.jpg"
+    case Doom = "D.jpg"
+    case Sup = "S.jpg"
+    case Ww = "W"
 }
 
 extension ImageAsset {
@@ -20,7 +21,9 @@ extension UIImage {
     }
 }
 
-//let enumAsImage = ImageAsset.Apple
-//enumAsImage.image
+let enumAsImage = ImageAsset.Bat
+enumAsImage.image
+// do you bleed ^_^
 
-//let image = UIImage(asset: .Microsoft) // boo
+let image = UIImage(asset: .Doom)
+image
