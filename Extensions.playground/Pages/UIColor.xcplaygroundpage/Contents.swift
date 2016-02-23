@@ -15,13 +15,21 @@ enum ProjectColorsString : String {
 }
 
 extension UIColor {
+    // from hex enum
     convenience init(named name: ProjectColorsHex) {
         let rgba = name.rawValue.toRGBA
         self.init(red: rgba.red, green: rgba.green, blue: rgba.blue, alpha: rgba.alpha)
     }
     
+    // from hex string exnum
     convenience init(named name: ProjectColorsString) {
         self.init(named: ProjectColorsHex(rawValue: name.rawValue.toUInt32)!)
+    }
+    
+    // just from strings ^_^
+    convenience init(named name: String) {
+        let rgba = name.toUInt32.toRGBA
+        self.init(red: rgba.red, green: rgba.green, blue: rgba.blue, alpha: rgba.alpha)
     }
 }
 
@@ -61,6 +69,11 @@ UIColor(named: ProjectColorsHex.Color4)
 // string enums
 ProjectColorsString.Color2.color
 UIColor(named: ProjectColorsString.Color3)
+
+// just strings
+UIColor(named: "ffffffcc")
+
+
 
 
 

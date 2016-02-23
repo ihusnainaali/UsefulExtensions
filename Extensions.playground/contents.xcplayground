@@ -9,5 +9,6 @@
         <page name='UIColor'/>
         <page name='UIButton'/>
         <page name='UIView'/>
+        <page name='CollectionType'/>
     </pages>
 </playground>

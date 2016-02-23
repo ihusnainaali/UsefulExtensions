@@ -8,5 +8,6 @@
 6. Bool
 7. UIButton (@IBDesignable)
 8. UIView (@IBDesignable)
+9. CollectionType
 
-sweet swifting 🍎🍎🍎🍎🍎
+swift apple 🍎🍎🍎🍎🍎🍎

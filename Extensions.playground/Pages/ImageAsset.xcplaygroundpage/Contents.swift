@@ -6,7 +6,7 @@ enum ImageAsset: String {
     case Bat = "B.jpg"
     case Doom = "D.jpg"
     case Sup = "S.jpg"
-    case Ww = "W"
+    case Ww = "W.jpg"
 }
 
 extension ImageAsset {
