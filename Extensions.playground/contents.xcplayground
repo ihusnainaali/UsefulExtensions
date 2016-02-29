@@ -10,5 +10,6 @@
         <page name='UIButton'/>
         <page name='UIView'/>
         <page name='CollectionType'/>
+        <page name='FileManager'/>
     </pages>
 </playground>
