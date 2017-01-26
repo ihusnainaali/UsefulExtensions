@@ -1,109 +1,84 @@
+import UIKit
 import Foundation
 
-enum Languages: String {
-    case Georgian = "GEO"
-    case English = "ENG"
-    case Russian = "RUS"
-}
-
-class IPNFileManager {
-    private static let _fileManager = IPNFileManager()
+class FileManagerHelper {
+    private static let _fileManager = FileManagerHelper()
     
-    private let fileManager = NSFileManager.defaultManager()
-    private let formmater = NSDateFormatter()
+    private let fileManager = FileManager.default
+    private let formatter = DateFormatter()
     
     private init() {
-        formmater.dateFormat = "dd-MM-yyyy"
-        createSuperDirectoies()
+        formatter.dateFormat = "dd-MM-yyyy"
     }
     
-    // return Singleton
-    class func sharedManager() -> IPNFileManager {
+    class var shared: FileManagerHelper {
         return _fileManager
     }
     
-    var mainDirectoryPath: NSURL {
-        return try! fileManager.URLForDirectory(NSSearchPathDirectory.DocumentDirectory, inDomain: NSSearchPathDomainMask.UserDomainMask, appropriateForURL: nil, create: false)
+    var documentDirectoryURL: URL {
+        return try! fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
     }
     
-    var mainActiveDirectory: NSURL {
-        return mainDirectoryPath.URLByAppendingPathComponent("GEO")
+    func createDirectiry(atUrl url: URL) throws {
+        try fileManager.createDirectory(at: url, withIntermediateDirectories: false, attributes: nil)
     }
     
-    private func createSuperDirectoies() {
-        let languages: [Languages] = [.Georgian, .English, .Russian]
-        for item in languages {
-            let path = mainDirectoryPath.URLByAppendingPathComponent(item.rawValue)
-            createDirectiry(path)
-        }
+    private func fileExsists(atUrl url: URL) -> Bool {
+        return fileManager.fileExists(atPath: url.path)
     }
     
-    private func createDirectiry(path: NSURL) {
-        try? fileManager.createDirectoryAtURL(path, withIntermediateDirectories: false, attributes: nil)
+    func contentOfDirectory(atUrl url: URL) throws -> [URL] {
+        let content = try fileManager.contentsOfDirectory(at: url, includingPropertiesForKeys: nil, options: FileManager.DirectoryEnumerationOptions.skipsHiddenFiles)
+        return content
     }
     
-    private func isFileExsists(path: NSURL) -> Bool {
-        guard let pathAsString = path.path else {
-            return false
-        }
-        return fileManager.fileExistsAtPath(pathAsString)
+    func creationDate(atUrl url: URL) throws -> String? {
+        let attrs = try fileManager.attributesOfItem(atPath: url.path)
+        guard let date = attrs[.creationDate] as? Date else { return nil }
+        return formatter.string(from: date)
     }
     
-    func currentDateInString(date: NSDate) -> String {
-        return formmater.stringFromDate(date)
+    func createFile(witText text: String, name: String? = nil) throws -> URL {
+        guard let data = text.data(using: .utf8) else { throw "i so sorry :(" }
+        return try createFile(witData: data)
     }
     
-    func contentOfDirectory(path: NSURL) -> [NSURL] {
-        do {
-            let content = try fileManager.contentsOfDirectoryAtURL(path, includingPropertiesForKeys: nil, options: NSDirectoryEnumerationOptions.SkipsHiddenFiles)
-            return content
-        }
-        catch {
-            
-        }
-        
-        return []
+    func createFile(witData data: Data, name: String? = nil) throws -> URL {
+        let fileName = name ?? "\(UUID().uuidString).txt"
+        let url = documentDirectoryURL.appendingPathComponent(fileName)
+        try data.write(to: url, options: .atomic)
+        return url
     }
     
-    func fileCreateDate(path: NSURL) -> String? {
-        guard let pathAsString = path.path else {
-            return nil
-        }
-        do {
-            let attrs = try fileManager.attributesOfItemAtPath(pathAsString)
-            guard let date = attrs[NSFileCreationDate] as? NSDate else {
-                return nil
-            }
-            return currentDateInString(date)
-        }
-        catch {
-            
-        }
-        
-        return nil
+    func readFileData(atUrl url: URL) throws -> Data {
+        return try Data(contentsOf: url)
     }
     
-    func createFile(text: String, fileName: String) throws {
-        // create current date folder in active main directory
-        let currentDateFolder = mainActiveDirectory.URLByAppendingPathComponent(currentDateInString(NSDate()))
-        createDirectiry(currentDateFolder)
-        // path for txt file
-        let filePath = currentDateFolder.URLByAppendingPathComponent(fileName)
-        try text.writeToURL(filePath, atomically: true, encoding: NSUTF8StringEncoding)
+    func readFileString(atUrl url: URL) throws -> String {
+        return try String(contentsOf: url, encoding: .utf8)
     }
 }
 
-let fileManager = IPNFileManager.sharedManager()
-print(fileManager.mainDirectoryPath)
-print(fileManager.mainActiveDirectory)
+extension String: Error { }
 
-try! fileManager.createFile("ეს არის ძალიან საიტერესო ტექსტი", fileName: "example.txt")
+let fileManager = FileManagerHelper.shared
+print(fileManager.documentDirectoryURL)
 
-let subDirectoryes = fileManager.contentOfDirectory(fileManager.contentOfDirectory(fileManager.mainActiveDirectory).first!)
 
-print(subDirectoryes)
+let url = try? fileManager.createFile(witText: "დონალდი !!!!", name: "example.txt")
+print(url?.absoluteString)
+print(url?.pathExtension) // გაფართოება
+print(url?.lastPathComponent) // სახელი ფაილის
 
-for item in subDirectoryes {
-    
-    print(fileManager.fileCreateDate(item)!)
+try? fileManager.createFile(witText: "შმუპერ ტექსტი !!!!")
+
+let urls = try fileManager.contentOfDirectory(atUrl: fileManager.documentDirectoryURL)
+urls.forEach {
+    print($0.lastPathComponent)
+    print(try? fileManager.readFileData(atUrl: $0))
+    print(try? fileManager.readFileString(atUrl: $0))
 }
+
+
+
+

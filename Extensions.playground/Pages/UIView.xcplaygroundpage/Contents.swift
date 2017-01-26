@@ -4,14 +4,14 @@ import UIKit
 class BWGradientView: UIView {
     
     @IBInspectable
-    var startColor: UIColor = UIColor.redColor() {
+    var startColor: UIColor = UIColor.red {
         didSet{
             setupView()
         }
     }
     
     @IBInspectable
-    var endColor: UIColor = UIColor.purpleColor() {
+    var endColor: UIColor = UIColor.purple {
         didSet{
             setupView()
         }
@@ -31,9 +31,9 @@ class BWGradientView: UIView {
         }
     }
     
-    override class func layerClass()->AnyClass{
-        return CAGradientLayer.self
-    }
+//    override class func layerClass() -> Any.Type {
+//        return CAGradientLayer.self
+//    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -47,7 +47,7 @@ class BWGradientView: UIView {
     
     private func setupView(){
         
-        let colors = [startColor.CGColor, endColor.CGColor]
+        let colors = [startColor.cgColor, endColor.cgColor]
         gradientLayer.colors = colors
         gradientLayer.cornerRadius = roundness
         
@@ -67,7 +67,7 @@ class BWGradientView: UIView {
     }
 }
 
-let view = BWGradientView(frame: CGRect(x: 0, y: 0, width: 300, height: 300))
-
-view
+//let view = BWGradientView(frame: CGRect(x: 0, y: 0, width: 300, height: 300))
+//
+//view
 
