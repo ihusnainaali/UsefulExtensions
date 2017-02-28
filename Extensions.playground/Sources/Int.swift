@@ -1,6 +1,7 @@
 import Foundation
 
 extension Int {
+    
     var isEven: Bool { return self % 2 == 0 }
     
     var isOdd: Bool { return !isEven }
@@ -29,12 +30,20 @@ extension Int {
         if self < 2  { return false }
         return (2..<self).filter { self % $0 == 0 }.count == 0
     }
+    
+    var random: Int {
+        return Int(arc4random_uniform(UInt32(self)))
+    }
+    
+    static func random(from: Int, to: Int) -> Int {
+        return Int(arc4random_uniform(UInt32(to - from + 1))) + from
+    }
+    
+    static var randomUUID: Int {
+        let first = "\(9.random + 1)"
+        let middle = (0..<9).map { _ in "\(arc4random_uniform(10))" }
+        let last = "\(9.random + 1)"
+        let combined = [first] + middle + [last]
+        return Int(combined.joined(separator: "")) ?? -1
+    }
 }
-
-2.isPrime
-3.isPrime
-105.isPrime
-
-
-
-

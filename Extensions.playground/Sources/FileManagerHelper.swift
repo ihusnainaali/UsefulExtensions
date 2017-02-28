@@ -61,23 +61,30 @@ class FileManagerHelper {
 
 extension String: Error { }
 
-let fileManager = FileManagerHelper.shared
-print(fileManager.documentDirectoryURL)
 
 
-let url = try? fileManager.createFile(witText: "დონალდი !!!!", name: "example.txt")
-print(url?.absoluteString)
-print(url?.pathExtension) // გაფართოება
-print(url?.lastPathComponent) // სახელი ფაილის
+//let fileManager = FileManagerHelper.shared
+//print(fileManager.documentDirectoryURL)
+//
+//
+//let url = try? fileManager.createFile(witText: "დონალდი !!!!", name: "example.txt")
+//print(url?.absoluteString)
+//print(url?.pathExtension) // გაფართოება
+//print(url?.lastPathComponent) // სახელი ფაილის
+//
+//try? fileManager.createFile(witText: "შმუპერ ტექსტი !!!!")
+//
+//let urls = try fileManager.contentOfDirectory(atUrl: fileManager.documentDirectoryURL)
+//urls.forEach {
+//    print($0.lastPathComponent)
+//    print(try? fileManager.readFileData(atUrl: $0))
+//    print(try? fileManager.readFileString(atUrl: $0))
+//}
 
-try? fileManager.createFile(witText: "შმუპერ ტექსტი !!!!")
 
-let urls = try fileManager.contentOfDirectory(atUrl: fileManager.documentDirectoryURL)
-urls.forEach {
-    print($0.lastPathComponent)
-    print(try? fileManager.readFileData(atUrl: $0))
-    print(try? fileManager.readFileString(atUrl: $0))
-}
+
+
+
 
 
 

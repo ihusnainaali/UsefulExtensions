@@ -1,7 +1,7 @@
 import UIKit
 
 @IBDesignable
-class BWGradientView: UIView {
+class GradientView: UIView {
     
     @IBInspectable
     var startColor: UIColor = UIColor.red {
@@ -31,9 +31,9 @@ class BWGradientView: UIView {
         }
     }
     
-//    override class func layerClass() -> Any.Type {
-//        return CAGradientLayer.self
-//    }
+    //    override class func layerClass() -> Any.Type {
+    //        return CAGradientLayer.self
+    //    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
